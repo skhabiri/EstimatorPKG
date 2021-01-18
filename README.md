@@ -1,5 +1,5 @@
 **Package_VEnv-311:** 
-
+**skestimate: https://pypi.org/project/skestimate/**
 ## How to publish the package:
 
 A repository named EstimatorPkg is created on github and cloned locally. We put the meta data in the top level of this repo and create a package named skestimate as a subdirectory. This package is going to be published on test pypi. During development importing the package is done in the virtual environment to ensure consistency.
