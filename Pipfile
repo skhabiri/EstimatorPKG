@@ -1,0 +1,17 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+scikit-learn = "*"
+numpy = "*"
+pandas = "*"
+matplotlib = "*"
+twine = "*"
+
+[dev-packages]
+twine = "*"
+
+[requires]
+python_version = ">=3.6"
