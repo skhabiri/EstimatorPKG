@@ -184,3 +184,53 @@ Here are the steps:
    * est.xscore(fit=True)
    * exit()        #exit the python repl
 * Exit the container with `exit`
+
+____
+
+### Unit Testing
+**software-testing-documentation-and-licensing-314**:
+
+unittest supports these concepts: 
+* A *test fixture* represents the preparation needed to perform one or more tests, and any associated cleanup actions.
+* A *test case* is the individual unit of testing. unittest provides a base class, TestCase, which may be used to create new test cases.
+* A *test suite* is a collection of test cases
+* A *test runner* is a component that executes tests and provides the output.
+
+
+*Basic structure of unit test:*
+```
+import unittest
+class mytestcase(unittest.TestCase):
+        def test_upper(self):
+                        self.assertEqual('foo'.upper(), 'FOO')
+
+
+def test_split(self):
+                       s = 'hello world'
+                        self.assertEqual(s.split(), ['hello', 'world'])
+                        # check that s.split fails when the separator is not a string
+                        with self.assertRaises(TypeError):
+                            s.split(2)
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+A testcase is created by subclassing unittest.TestCase. The individual tests are defined with methods whose names start with the letters test. This naming convention informs the test runner about which methods represent tests. `unittest.main()` provides a command-line interface to the test script. It will run all the test methods in all the testcases, `python skestimate/test_skestimate.py --verbose`. The verbosity output tests docstring as well. To avoid repetitive test fixtures, we may use the setUp(self) method in a testcase class, which will run before every test method in that class.
+unittest.TestCase() assert methods:
+* assertEqual(a, b)                #a == b
+* assertNotEqual(a, b)             #a != b
+* assertTrue(x)                    #bool(x) is True
+* assertFalse(x)
+* assertIs(a, b)                   #a is b
+* assertIsNot(a, b)
+* assertIsNone(x)                  #x is None
+* assertIsNotNone(x)
+* assertIn(a, b)                   #a in b
+* assertNotIn(a, b)
+* with self.assertRaises(SomeException):
+                    do_something()
+
+One test method may have multiple assert statements. If any of the assert statements fail, the whole test method fails.
+
+For testing the _skestimate_ package run `python skestimate/test_skestimate.py --verbose` from the project directory.
