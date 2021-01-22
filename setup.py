@@ -18,7 +18,7 @@ with open("./skestimate/README.md", "r") as file:
     LONG_DESCRIPTION = file.read()
 setuptools.setup(
     name="skestimate",
-    version="0.0.2",
+    version="0.0.3",
     author="skhabiri",
     description="fit estimate utility",
     long_description=LONG_DESCRIPTION,

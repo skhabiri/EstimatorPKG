@@ -18,3 +18,7 @@ RUN apt update && \
   apt install python3-pip -y && \
   pip3 install pandas numpy scikit-learn matplotlib && \
   pip3 install skestimate
+
+## In command prompt:
+## docker build . -t skestimate_di
+## docker run -it skestimate_di

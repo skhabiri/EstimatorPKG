@@ -135,3 +135,52 @@ from foo import foo_func
 ----------------------
 
 ```
+____
+
+# Containers and Reproducible Builds-313:
+Install Docker Desktop and create login in docker.com. Container can create a minimally required operating system that is more efficient in doing specialized work. Docker can also save on the hardware expenditure as it can create different environment on docker daemon and stream it to the docker client on our local machine. We can use our local machine and `docker` command to run a client docker or use a web based docker client as follows.
+1. Log into https://labs.play-with-docker.com/
+2. Add a new Instance
+3. `apk add nano` adds nano text editor to the container. This is specific to the host OS distribution which is arch linux in this case, and it’s not related to the docker.
+4. `which docker` verifies existence of docker.
+5. `docker run hello-world`        # since it’s not recognised locally docker client contact docker daemon to pull the hello-world image from docker hub and create a docker container based on that image which runs an executable “hello from docker world” and stream it back to the docker client to print it on our local terminal.. 
+6. `docker run -it debian /bin/bash`        # create a container based on debian distribution of linux with bash shell interactive mode.
+7. `nano`                # doesn’t work anymore as we are in a new container. Now we are in debian linux not arch linux anymore.
+8. `exit` we exit from debian and return to the jost arch linux OS that we were before
+9. `docker run -it debian /bin/bash`        # will create a new container with a new hash numbers. The idea is containers are disposable and we can recreate them from images.
+10. `apt update`                # update all the packages
+11. `apt install python3`        # install python3 on the Debian distribution of Linux kernel.
+12. `python3`                # we can run python3 on Debian Linux!
+13. `apt-get install python3-pip`        # to get pip3
+14. `pip3 install skestimate`        # we can test our package on Debian. Nice!
+15. `docker image ls`        # shows all the local images available
+16. `docker container ls -a`        # shows container ID and images available locally of the past containers that were recently run. Docker containers only save the differences vs original images and are usually small, but docker images by themselves could be large.
+17.  `nano Dockerfile`        # allows us to create a tweaked image based on an existing docker hub image to be able to build a fresh container based on that image every time we launch docker run.
+18.  `docker build . -t skestimate`                # build an image based on the Dockerfile in . and tag it with a specific name skestimate
+19.  `docker image ls`        # in addition to debian and hello-world, lists skestimate as a local image available to build a container based on.
+20.  `docker run -it skestimate`        #create a container based on an image which was originally built according to Dockerfile Dockerfile is a metafile located in the project (repository) directory not package directory. 
+21. `docker image rm hello-world`        # We can remove unnecessary images to free up space. However, if there is a container dependent on that image, first we need to remove the container.
+22. `docker container rm 91a3932b5cdc`, `docker image rm hello-world`, `docker image ls`
+23. `docker run lambdata_skhab python3 -c "import skestimate; print(skestimate.example().xskew(0.9))"`        # without running the image interactively, it runs a command inside a freshly created container based on the image skestimate and exit.
+24. Docker can be used for sharing software, and it can be published on hub.docker.com
+
+
+###  Docker Container
+Our goal is to test our sketimate package in a debian OS through docker image.
+Here are the steps:
+* Create the Dockerfile in EstimatePkg directory, which is the repository (project) directory. The specific instructions in Dockerfile are:
+    * Based in”debian” image in dockerhub
+    * bash shell
+    * Python3 and pip3 installed
+    * numpy, pandas, scikit-learn,  and matplotlib all installed
+    * skestimate package installed
+* Build the image on local machine with `docker build . -t skestimate_di`
+* Very the existence of the new package with `docker image ls`
+* Create and enter a fresh container with `docker run -it skestimate_di’
+* Test the package with:
+   * python3
+   * import skestimate
+   * est = skestimate.example()
+   * est.xscore(fit=True)
+   * exit()        #exit the python repl
+* Exit the container with `exit`
